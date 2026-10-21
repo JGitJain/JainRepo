@@ -1,0 +1,25 @@
+import requests
+from bs4 import BeautifulSoup
+
+# URL of the website to scrape
+url = "https://nmsindia.org"  # Replace with the desired URL
+
+# Send a GET request to fetch the HTML content
+response = requests.get(url)
+
+# Check if the request was successful
+if response.status_code == 200:
+    # Parse the HTML content using BeautifulSoup
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Extract specific data (e.g., all hyperlinks)
+    links = soup.find_all('a')  # Find all <a> tags
+
+    # Print the extracted links
+    print("Links found on the webpage:")
+    for link in links:
+        href = link.get('href')  # Get the URL from the href attribute
+        if href:  # Make sure href is not None
+            print(href)
+else:
+    print(f"Failed to fetch data from {url}. Status code: {response.status_code}")
